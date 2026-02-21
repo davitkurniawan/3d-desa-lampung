@@ -1,0 +1,35 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": { "name": "Lampung Selatan" },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [105.35, -5.90], [105.85, -5.80], [105.90, -5.30], [105.50, -5.20], [105.20, -5.50], [105.35, -5.90]
+        ]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Lampung Tengah" },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [104.90, -5.10], [105.50, -5.00], [105.60, -4.60], [105.00, -4.50], [104.80, -4.80], [104.90, -5.10]
+        ]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Lampung Barat" },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [104.30, -5.40], [104.80, -5.30], [104.90, -4.90], [104.40, -4.80], [104.20, -5.10], [104.30, -5.40]
+        ]]
+      }
+    }
+  ]
+}
