@@ -359,17 +359,18 @@
       }
       .legend-table {
         right: 12px !important;
-        bottom: 76px !important;
+        bottom: calc(120px + env(safe-area-inset-bottom, 0px)) !important;
         min-width: 220px !important;
       }
       #mobile-quick-panel {
         display: block !important;
+        bottom: calc(120px + env(safe-area-inset-bottom, 0px)) !important;
       }
       #mobile-panel-toggles {
         display: block !important;
       }
       #copyright {
-        bottom: calc(72px + env(safe-area-inset-bottom, 0px));
+        bottom: calc(84px + env(safe-area-inset-bottom, 0px));
       }
       .legend, .legend-table {
         display: none !important;
