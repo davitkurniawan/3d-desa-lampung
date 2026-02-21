@@ -234,6 +234,12 @@
           </div>
         </div>
       </div>
+      <div id="mobile-panel-toggles" style="display:none;position:absolute;right:12px;bottom:12px;z-index:1000;">
+        <div style="display:flex;gap:8px;">
+          <button id="btn-legend" aria-label="Buka legenda" title="Legenda" style="padding:8px 10px;border-radius:999px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.18);color:inherit;font-size:16px;">🎛️</button>
+          <button id="btn-txn" aria-label="Buka tabel nilai" title="Nilai transaksi" style="padding:8px 10px;border-radius:999px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.18);color:inherit;font-size:16px;">📊</button>
+        </div>
+      </div>
     </div>
   </div>
   <link rel="stylesheet" href="./vendor/leaflet/leaflet.css">
@@ -358,6 +364,18 @@
       }
       #mobile-quick-panel {
         display: block;
+      }
+      #mobile-panel-toggles {
+        display: block;
+      }
+      .legend, .legend-table {
+        display: none !important;
+      }
+      .legend.open {
+        display: grid !important;
+      }
+      .legend-table.open {
+        display: block !important;
       }
     }
   </style>
