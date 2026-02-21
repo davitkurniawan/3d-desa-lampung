@@ -369,7 +369,7 @@
         display: block;
       }
       #copyright {
-        bottom: 36px;
+        bottom: calc(72px + env(safe-area-inset-bottom, 0px));
       }
       .legend, .legend-table {
         display: none !important;
