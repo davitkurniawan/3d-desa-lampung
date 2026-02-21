@@ -862,6 +862,33 @@ async function main() {
       updateLegend({ desaCount: desaData.length, flowCount: Object.values(flowGroups).length });
     });
   }
+  const btnLegend = document.getElementById("btn-legend");
+  const btnTxn = document.getElementById("btn-txn");
+  const legendPanel = document.getElementById("legend");
+  const txnPanel = document.getElementById("txn-legend");
+  function setPanelOpen(panel, open) {
+    if (!panel) return;
+    if (open) panel.classList.add("open");
+    else panel.classList.remove("open");
+  }
+  if (btnLegend && legendPanel) {
+    btnLegend.addEventListener("click", () => {
+      const willOpen = !legendPanel.classList.contains("open");
+      setPanelOpen(legendPanel, willOpen);
+      if (willOpen) setPanelOpen(txnPanel, false);
+    });
+  }
+  if (btnTxn && txnPanel) {
+    btnTxn.addEventListener("click", () => {
+      const willOpen = !txnPanel.classList.contains("open");
+      setPanelOpen(txnPanel, willOpen);
+      if (willOpen) setPanelOpen(legendPanel, false);
+    });
+  }
+  if (isMobile) {
+    setPanelOpen(legendPanel, false);
+    setPanelOpen(txnPanel, false);
+  }
   document.getElementById("reset-view").addEventListener("click", () => {
     focusLampung();
   });
