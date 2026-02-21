@@ -875,22 +875,28 @@ async function main() {
   }
   if (btnLegend && legendPanel) {
     btnLegend.addEventListener("click", () => {
+      log("Klik tombol Legenda");
       const willOpen = !legendPanel.classList.contains("open");
       setPanelOpen(legendPanel, willOpen);
       if (willOpen) setPanelOpen(txnPanel, false);
+      if (quickPanel) setPanelOpen(quickPanel, false);
     });
   }
   if (btnTxn && txnPanel) {
     btnTxn.addEventListener("click", () => {
+      log("Klik tombol Nilai");
       const willOpen = !txnPanel.classList.contains("open");
       setPanelOpen(txnPanel, willOpen);
       if (willOpen) setPanelOpen(legendPanel, false);
+      if (quickPanel) setPanelOpen(quickPanel, false);
     });
   }
   if (btnSpeed && quickPanel) {
     btnSpeed.addEventListener("click", () => {
+      log("Klik tombol Kecepatan");
       const willOpen = !quickPanel.classList.contains("open");
       setPanelOpen(quickPanel, willOpen);
+      quickPanel.style.display = willOpen ? "block" : "none";
       if (willOpen) {
         setPanelOpen(legendPanel, false);
         setPanelOpen(txnPanel, false);
