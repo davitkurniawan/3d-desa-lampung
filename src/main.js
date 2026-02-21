@@ -864,8 +864,10 @@ async function main() {
   }
   const btnLegend = document.getElementById("btn-legend");
   const btnTxn = document.getElementById("btn-txn");
+  const btnSpeed = document.getElementById("btn-speed");
   const legendPanel = document.getElementById("legend");
   const txnPanel = document.getElementById("txn-legend");
+  const quickPanel = document.getElementById("mobile-quick-panel");
   function setPanelOpen(panel, open) {
     if (!panel) return;
     if (open) panel.classList.add("open");
@@ -885,9 +887,20 @@ async function main() {
       if (willOpen) setPanelOpen(legendPanel, false);
     });
   }
+  if (btnSpeed && quickPanel) {
+    btnSpeed.addEventListener("click", () => {
+      const willOpen = !quickPanel.classList.contains("open");
+      setPanelOpen(quickPanel, willOpen);
+      if (willOpen) {
+        setPanelOpen(legendPanel, false);
+        setPanelOpen(txnPanel, false);
+      }
+    });
+  }
   if (isMobile) {
     setPanelOpen(legendPanel, false);
     setPanelOpen(txnPanel, false);
+    setPanelOpen(quickPanel, false);
   }
   document.getElementById("reset-view").addEventListener("click", () => {
     focusLampung();

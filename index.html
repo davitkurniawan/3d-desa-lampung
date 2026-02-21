@@ -238,6 +238,7 @@
         <div style="display:flex;gap:8px;">
           <button id="btn-legend" aria-label="Buka legenda" title="Legenda" style="padding:8px 10px;border-radius:999px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.18);color:inherit;font-size:16px;">🎛️</button>
           <button id="btn-txn" aria-label="Buka tabel nilai" title="Nilai transaksi" style="padding:8px 10px;border-radius:999px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.18);color:inherit;font-size:16px;">📊</button>
+          <button id="btn-speed" aria-label="Buka pengaturan kecepatan" title="Kecepatan" style="padding:8px 10px;border-radius:999px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.18);color:inherit;font-size:16px;">⏱️</button>
         </div>
       </div>
     </div>
@@ -363,8 +364,10 @@
         min-width: 220px !important;
       }
       #mobile-quick-panel {
-        display: block !important;
         bottom: calc(120px + env(safe-area-inset-bottom, 0px)) !important;
+      }
+      #mobile-quick-panel.open {
+        display: block !important;
       }
       #mobile-panel-toggles {
         display: block !important;
