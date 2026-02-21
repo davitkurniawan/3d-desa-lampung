@@ -1,0 +1,19 @@
+{
+  "desa": [
+    { "nama": "Sukaraja, Bandar Lampung", "lat": -5.429, "lon": 105.262 },
+    { "nama": "Yosodadi, Metro", "lat": -5.112, "lon": 105.306 },
+    { "nama": "Kedondong, Pesawaran", "lat": -5.460, "lon": 105.145 },
+    { "nama": "Kalianda, Lampung Selatan", "lat": -5.733, "lon": 105.608 },
+    { "nama": "Gunung Sugih, Lampung Tengah", "lat": -4.829, "lon": 105.192 },
+    { "nama": "Terbanggi Besar, Lampung Tengah", "lat": -4.930, "lon": 105.243 },
+    { "nama": "Kotabumi, Lampung Utara", "lat": -4.831, "lon": 104.892 },
+    { "nama": "Baradatu, Way Kanan", "lat": -4.327, "lon": 104.595 },
+    { "nama": "Liwa, Lampung Barat", "lat": -5.058, "lon": 104.067 },
+    { "nama": "Kota Agung, Tanggamus", "lat": -5.506, "lon": 104.649 },
+    { "nama": "Pringsewu, Pringsewu", "lat": -5.354, "lon": 104.975 },
+    { "nama": "Menggala, Tulang Bawang", "lat": -4.518, "lon": 105.245 },
+    { "nama": "Panaragan, Tulang Bawang Barat", "lat": -4.522, "lon": 104.459 },
+    { "nama": "Bawang Sakti Jaya, Mesuji", "lat": -4.033, "lon": 105.459 },
+    { "nama": "Way Tuba, Way Kanan", "lat": -4.269, "lon": 104.685 }
+  ]
+}

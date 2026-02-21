@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>3D Peta Desa Provinsi Lampung</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      background: #0a0f1a;
+      color: #e6edf3;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+    }
+    #app {
+      position: fixed;
+      inset: 0;
+      display: grid;
+      grid-template-columns: 320px 1fr;
+      grid-template-rows: 56px 1fr;
+      grid-template-areas:
+        "header header"
+        "sidebar canvas";
+    }
+    header {
+      grid-area: header;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 16px;
+      backdrop-filter: blur(6px);
+      background: rgba(10, 15, 26, 0.6);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    header h1 {
+      font-size: 18px;
+      margin: 0;
+    }
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .brand .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #00c2ff;
+      box-shadow: 0 0 12px #00c2ff;
+    }
+    #sidebar {
+      grid-area: sidebar;
+      padding: 16px;
+      border-right: 1px solid rgba(255,255,255,0.08);
+      background: rgba(10,15,26,0.35);
+      backdrop-filter: blur(4px);
+      overflow: auto;
+    }
+    .section-title {
+      font-size: 13px;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      opacity: 0.8;
+      margin: 8px 0 12px;
+    }
+    .controls {
+      display: grid;
+      gap: 8px;
+    }
+    .control-group {
+      display: grid;
+      gap: 8px;
+      padding: 10px;
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 8px;
+      background: rgba(255,255,255,0.03);
+    }
+    .control-group label {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      font-size: 14px;
+      padding: 8px 10px;
+      border-radius: 6px;
+      background: rgba(255,255,255,0.02);
+    }
+    .color {
+      width: 14px;
+      height: 14px;
+      border-radius: 3px;
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+    #canvas-wrap {
+      grid-area: canvas;
+      position: relative;
+      overflow: hidden;
+    }
+    canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+    .legend {
+      position: absolute;
+      right: 16px;
+      bottom: 16px;
+      display: grid;
+      gap: 6px;
+      background: rgba(10,15,26,0.5);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 8px;
+      padding: 10px 12px;
+      font-size: 12px;
+      z-index: 1000;
+      pointer-events: auto;
+    }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .legend-item .swatch {
+      width: 12px;
+      height: 12px;
+      border-radius: 3px;
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+    .footnote {
+      font-size: 11px;
+      opacity: 0.7;
+      margin-top: 12px;
+    }
+    .btn-row {
+      display: flex;
+      gap: 8px;
+      margin-top: 10px;
+    }
+    button {
+      appearance: none;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.06);
+      color: inherit;
+      font-size: 13px;
+      padding: 8px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: rgba(255,255,255,0.12);
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <header>
+      <div class="brand">
+        <div class="dot"></div>
+        <h1>3D Peta Desa Provinsi Lampung</h1>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;">
+        <button id="mobile-toggle" aria-label="Buka menu" style="display:none;">☰</button>
+        <div>Demo interaktif</div>
+      </div>
+    </header>
+    <aside id="sidebar">
+      <div class="section-title">Komoditas</div>
+      <div class="control-group" id="commodity-controls">
+        <label><span>Padi</span><span class="color" style="background:#56d364"></span><input type="checkbox" data-commodity="Padi" checked></label>
+        <label><span>Jagung</span><span class="color" style="background:#ffb454"></span><input type="checkbox" data-commodity="Jagung" checked></label>
+        <label><span>Singkong</span><span class="color" style="background:#f778ba"></span><input type="checkbox" data-commodity="Singkong" checked></label>
+        <label><span>Kopi</span><span class="color" style="background:#b0885b"></span><input type="checkbox" data-commodity="Kopi" checked></label>
+        <label><span>Sayur</span><span class="color" style="background:#3fb950"></span><input type="checkbox" data-commodity="Sayur" checked></label>
+        <label><span>Telur</span><span class="color" style="background:#ffd700"></span><input type="checkbox" data-commodity="Telur" checked></label>
+        <label><span>Ayam</span><span class="color" style="background:#e9967a"></span><input type="checkbox" data-commodity="Ayam" checked></label>
+        <label><span>Daging</span><span class="color" style="background:#dc3545"></span><input type="checkbox" data-commodity="Daging" checked></label>
+        <label><span>Ikan</span><span class="color" style="background:#00c2ff"></span><input type="checkbox" data-commodity="Ikan" checked></label>
+      </div>
+      <div class="btn-row">
+        <button id="randomize-flows">Acak Arus</button>
+        <button id="reset-view">Reset Tampilan</button>
+      </div>
+      <div class="section-title">Kecepatan</div>
+      <div class="control-group">
+        <label>
+          <span>Kecepatan animasi</span>
+          <input id="speed-control" type="range" min="0.2" max="2.0" step="0.1" value="1.0">
+        </label>
+      </div>
+      <div class="section-title">Pengaturan Arus</div>
+      <div class="control-group">
+        <label>
+          <span>Arus lintas provinsi</span>
+          <input id="toggle-crossprov" type="checkbox" checked>
+        </label>
+        <label>
+          <span>Faktor harga</span>
+          <input id="price-factor" type="range" min="0.5" max="2.0" step="0.1" value="1.0">
+        </label>
+        <label>
+          <span>Tampilkan garis arus</span>
+          <input id="toggle-flowlines" type="checkbox">
+        </label>
+        <label>
+          <span>Kerapatan garis</span>
+          <input id="line-density" type="range" min="0.1" max="1.0" step="0.1" value="0.3">
+        </label>
+      </div>
+      <div class="footnote">Data desa contoh. Ganti file data/desa.json dengan koordinat lengkap.</div>
+    </aside>
+    <div id="canvas-wrap">
+      <div id="map" style="position:absolute;inset:0;"></div>
+      <canvas id="scene" style="pointer-events:none;"></canvas>
+      <div class="legend" id="legend"></div>
+      <div class="legend legend-table" id="txn-legend" style="position:absolute;right:16px;bottom:16px;min-width:260px;"></div>
+      <div id="debug" style="position:absolute;left:16px;bottom:16px;font-size:12px;opacity:0.75;"></div>
+      <div id="copyright" style="position:absolute;left:50%;bottom:8px;transform:translateX(-50%);font-size:12px;opacity:0.9;z-index:1000;pointer-events:none;">© by davit.kurniawan@gmail.com</div>
+      <div id="mobile-quick-panel" style="display:none;position:absolute;left:12px;bottom:12px;z-index:1000;">
+        <div style="display:grid;gap:8px;padding:10px 12px;background:rgba(13,20,33,0.85);border:1px solid rgba(255,255,255,0.12);border-radius:12px;backdrop-filter:blur(8px);min-width:220px;">
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;">
+            <span style="font-size:12px;opacity:0.85;">Kecepatan</span>
+            <input id="m-speed" type="range" min="0.2" max="2.0" step="0.1" value="1.0">
+          </div>
+          <label style="display:flex;align-items:center;justify-content:space-between;gap:10px;">
+            <span style="font-size:12px;opacity:0.85;">Garis arus</span>
+            <input id="m-lines" type="checkbox">
+          </label>
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;">
+            <span style="font-size:12px;opacity:0.85;">Kerapatan</span>
+            <input id="m-density" type="range" min="0.1" max="1.0" step="0.1" value="0.2">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <link rel="stylesheet" href="./vendor/leaflet/leaflet.css">
+  <style>
+    .kab-label {
+      font: 12px/1.2 system-ui,-apple-system,Segoe UI,Roboto;
+      color: #e6edf3;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.7);
+      padding: 2px 6px;
+      background: rgba(13,20,33,0.6);
+      border-radius: 6px;
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+    .commodity-marker {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 8px;
+      background: rgba(13,20,33,0.75);
+      color: #e6edf3;
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 14px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.35);
+      font: 13px/1.2 system-ui,-apple-system,Segoe UI,Roboto;
+      transform: translate(-50%, -50%);
+      white-space: nowrap;
+    }
+    .commodity-marker .emoji {
+      font-size: 16px;
+    }
+    .commodity-marker .qty {
+      font-weight: 600;
+      letter-spacing: 0.2px;
+    }
+    .commodity-marker .dest {
+      color: #8ab4f8;
+      font-weight: 600;
+    }
+    .value-label {
+      padding: 3px 6px;
+      background: rgba(0,0,0,0.55);
+      color: #ffd67d;
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 10px;
+      font: 12px/1.2 system-ui,-apple-system,Segoe UI,Roboto;
+      transform: translate(-50%, -50%);
+      white-space: nowrap;
+    }
+    #map.map-fallback {
+      background:
+        radial-gradient(1200px 600px at 20% 0%, rgba(10,15,25,0.9), rgba(10,15,25,0.85)),
+        linear-gradient(180deg, rgba(9,13,21,1) 0%, rgba(12,16,26,1) 100%);
+    }
+    .legend-table {
+      background: rgba(13,20,33,0.85);
+      color: #e6edf3;
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 12px;
+      padding: 10px 12px;
+      box-shadow: 0 10px 24px rgba(0,0,0,0.35);
+      font: 12px/1.4 system-ui,-apple-system,Segoe UI,Roboto;
+      z-index: 1000;
+      pointer-events: auto;
+    }
+    .legend-table table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    .legend-table th, .legend-table td {
+      padding: 6px 8px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      text-align: left;
+    }
+    .legend-table th {
+      color: #8ab4f8;
+      font-weight: 600;
+    }
+    .legend-table .right {
+      text-align: right;
+    }
+    /* Mobile responsive */
+    @media (max-width: 768px) {
+      #app {
+        grid-template-columns: 1fr;
+        grid-template-rows: 56px 1fr;
+        grid-template-areas:
+          "header"
+          "canvas";
+      }
+      #sidebar {
+        position: fixed;
+        top: 56px;
+        left: 0;
+        width: 85%;
+        height: calc(100% - 56px);
+        transform: translateX(-100%);
+        transition: transform .25s ease;
+        z-index: 950;
+        background: rgba(10,15,26,0.92);
+        backdrop-filter: blur(8px);
+      }
+      #sidebar.open {
+        transform: translateX(0);
+      }
+      #mobile-toggle {
+        display: inline-block;
+        border: 1px solid rgba(255,255,255,0.2);
+        background: rgba(255,255,255,0.08);
+        color: inherit;
+        padding: 6px 10px;
+        border-radius: 6px;
+        font-size: 16px;
+      }
+      .legend {
+        right: 12px;
+        bottom: 12px;
+      }
+      .legend-table {
+        right: 12px !important;
+        bottom: 76px !important;
+        min-width: 220px !important;
+      }
+      #mobile-quick-panel {
+        display: block;
+      }
+    }
+  </style>
+  <div id="sidebar-overlay" style="display:none;position:fixed;left:0;top:56px;right:0;bottom:0;background:rgba(0,0,0,0.35);z-index:940;"></div>
+  <script src="./vendor/three/three.min.js" defer></script>
+  <script src="./vendor/three/OrbitControls.js" defer></script>
+  <script src="./vendor/leaflet/leaflet.js" defer></script>
+  <script src="./src/main.js" defer></script>
+</body>
+</html>

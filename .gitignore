@@ -1,0 +1,27 @@
+# macOS
+.DS_Store
+
+# Trae IDE artifacts
+.trae/
+
+# Logs
+*.log
+logs/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Editor
+.vscode/
+.idea/
+
+# Build/Temp
+dist/
+tmp/
+*.tmp
+
+# Node (if used)
+node_modules/
+
+# Cache
+.cache/
